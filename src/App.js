@@ -15,7 +15,7 @@ const App = () => {
       console.log(data)
 
     }
-    
+    fett()
     console.log('amif')
   },[])
   return (
