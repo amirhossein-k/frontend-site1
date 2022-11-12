@@ -15,6 +15,7 @@ const App = () => {
       console.log(data)
 
     }
+    fett()
   },[])
   return (
     <div>
