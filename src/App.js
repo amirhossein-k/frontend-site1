@@ -4,9 +4,15 @@ import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import LandingPage from "./screens/LandingPage/LandingPage";
 import './App.css';
+import axios from "axios";
 
 
 const App = () => {
+
+  useEffect(()=>{
+    axios.get('https://backend-site1.vercel.app/api/notes',)
+    .then(res=> console.log(res))
+  },[])
   return (
     <div>
       <Header />
