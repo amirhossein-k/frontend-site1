@@ -10,7 +10,7 @@ import axios from "axios";
 const App = () => {
 
   useEffect(()=>{
-    axios.get('https://backend-site1.vercel.app/api/notes',)
+    axios.get('/api/notes',)
     .then(res=> console.log(res))
   },[])
   return (
