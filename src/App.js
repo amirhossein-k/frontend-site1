@@ -11,7 +11,7 @@ const App = () => {
 
   useEffect(()=>{
     const fett = async () =>{
-      const {data} = await axios.get('/api/notes')
+      const {data} = await axios.get('https://backend-site1.vercel.app/api/notes')
       console.log(data)
 
     }
