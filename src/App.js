@@ -11,7 +11,7 @@ const App = () => {
 
   useEffect(()=>{
     axios.get('/api/notes')
-    .then(res=> console.log(res))
+    .then(res=> console.log(res.data))
   },[])
   return (
     <div>
