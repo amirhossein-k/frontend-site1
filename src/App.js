@@ -16,6 +16,7 @@ const App = () => {
 
     }
     fett()
+    console.log('amif')
   },[])
   return (
     <div>
