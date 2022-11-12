@@ -18,7 +18,7 @@ const LandingPage = () => {
         <Row>
           <div className="intro_textt">
             <div>
-              <h1 className="text-white">gyyygy To My Site</h1>
+              <h1 className="text-white">iii To My Site</h1>
               <p className="text-white"> This is Best Site ForEver</p>
             </div>
           </div>
