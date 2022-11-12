@@ -20,7 +20,7 @@ const App = () => {
   },[])
   return (
     <div>
-      fyfyguhhihij
+      momomomomomom
       <Header />
       <main>
         <LandingPage />
