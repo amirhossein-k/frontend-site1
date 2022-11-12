@@ -10,8 +10,11 @@ import axios from "axios";
 const App = () => {
 
   useEffect(()=>{
-    axios.get('/api/notes')
-    .then(res=> console.log(res.data))
+    const fett = async () =>{
+      const {data} = await axios.get('/api/notes')
+      console.log(data)
+
+    }
   },[])
   return (
     <div>
