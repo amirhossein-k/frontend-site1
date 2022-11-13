@@ -14,7 +14,7 @@ const LandingPage = () => {
         backgroundPosition: "center",
       }}
     >
-      <Container>
+      <Container className="box">
         <Row>
           <div className="intro_textt">
             <div>

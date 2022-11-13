@@ -19,6 +19,9 @@
   }
 }
 
-.box{
-  background-color: red;
+.box {
+  backdrop-filter: blur(4px);
+  border: 1px #ccc solid;
+  border-radius: 5px;
+  padding: 5px;
 }
