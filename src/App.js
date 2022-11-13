@@ -11,12 +11,12 @@ const App = () => {
 
   useEffect(()=>{
     const fett = async () =>{
-      const {data} = await axios.get('https://backend-site1.vercel.app/api/notes')
+      const {data} = await axios.get('https://new-folder-two.vercel.app/api/test')
       console.log(data)
 
     }
     fett()
-    console.log('amif')
+    
   },[])
   return (
     <div>
