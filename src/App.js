@@ -1,32 +1,32 @@
-
 import React, { useEffect, useState } from "react";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import LandingPage from "./screens/LandingPage/LandingPage";
-import './App.css';
+import "./App.css";
 import axios from "axios";
-
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MyNotes from "./screens/MyNotes/MyNotes";
 const App = () => {
-
-  useEffect(()=>{
-    const fett = async () =>{
-      const {data} = await axios.get('https://exqe2r-8000.preview.csb.app/api/test')
-      console.log(data)
-
-    }
-    fett()
-    
-  },[])
+  useEffect(() => {
+    const fett = async () => {
+      const { data } = await axios.get(
+        "https://exqe2r-8000.preview.csb.app/api/test"
+      );
+      console.log(data);
+    };
+    fett();
+  }, []);
   return (
-    <div>
-      momomomomomom
+    <BrowserRouter>
       <Header />
       <main>
-        <LandingPage />
+        <Routes>
+          <Route path="/" exact element={<LandingPage />} />
+          <Route path="/mynotes" element={() => <MyNotes />} />
+        </Routes>
       </main>
       <Footer />
-    </div>
+    </BrowserRouter>
   );
 };
 
