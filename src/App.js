@@ -22,7 +22,7 @@ const App = () => {
       <main>
         <Routes>
           <Route path="/" exact element={<LandingPage />} />
-          <Route path="/mynotes" element={() => <MyNotes />} />
+          <Route path="/mynotes" element={<MyNotes />} />
         </Routes>
       </main>
       <Footer />

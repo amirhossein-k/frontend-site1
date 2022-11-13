@@ -5,13 +5,19 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import { Link } from "react-router-dom";
+import "./Header.css";
 
 const Header = () => {
   return (
     <div>
       <Navbar bg="primary" expand="lg" variant="dark">
         <Container>
-          <Navbar.Brand href="/">Navbar scroll</Navbar.Brand>
+          <Navbar.Brand>
+            <Link to="/" className="link">
+              Navbar scroll
+            </Link>
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav className="m-auto">
@@ -25,7 +31,9 @@ const Header = () => {
               </Form>
             </Nav>
             <Nav style={{ maxHeight: "200px" }} navbarScroll>
-              <Nav.Link href="#action1">My Notes</Nav.Link>
+              <Nav.Link href="/mynotes">
+                <Link to="/mynotes">My Notes</Link>
+              </Nav.Link>
               <Nav.Link href="#action2">Link</Nav.Link>
               <NavDropdown title="Dashboard" id="navbarScrollingDropdown">
                 <NavDropdown.Item href="#action3">My Profile</NavDropdown.Item>
