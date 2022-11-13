@@ -32,7 +32,9 @@ const Header = () => {
             </Nav>
             <Nav style={{ maxHeight: "200px" }} navbarScroll>
               <Nav.Link href="/mynotes">
-                <Link to="/mynotes">My Notes</Link>
+                <Link to="/mynotes" className="link">
+                  My Notes
+                </Link>
               </Nav.Link>
               <Nav.Link href="#action2">Link</Nav.Link>
               <NavDropdown title="Dashboard" id="navbarScrollingDropdown">
