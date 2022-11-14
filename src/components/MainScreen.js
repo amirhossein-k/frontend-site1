@@ -1,12 +1,21 @@
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
-const MainScreen = () => {
+import "./MainScreen.css";
+const MainScreen = ({ title, children }) => {
   return (
     <div className="mainback">
       <Container>
-          <Row>
-              <div className='page'>
-          </Row>
+        <Row>
+          <div className="page">
+            {title && (
+              <>
+                <h1 className="heading">{title}</h1>
+                <hr />
+              </>
+            )}
+            {children}
+          </div>
+        </Row>
       </Container>
     </div>
   );
