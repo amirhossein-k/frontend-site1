@@ -6,7 +6,7 @@ import "./App.css";
 import axios from "axios";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MyNotes from "./screens/MyNotes/MyNotes";
-import RegisterScreen from " ./screens/RegisterScreen/RegisterScreen";
+import RegisterScreen from " ./RegisterScreen/RegisterScreen";
 import LoginScreen from " ./screens/LoginScreen/LoginScreen";
 
 const App = () => {
