@@ -4,24 +4,81 @@ import MainScreen from "../../components/MainScreen";
 import ErrorMessage from "../../components/ErrorMessage";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
+import Loading from "../../components/Loading";
+// import cloudinary from "cloudinary";
 const RegisterScreen = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [pic, setPic] = useState(
+    "https://www.uplooder.net/img/image/26/ed865d9371d96b09081c66f518ae0a8c/pngwing.com-(26).png"
+  );
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
-  // const [message, setMessage] = useState(null);
-  // const [picMessage, setPicMessage] = useState(null);/
+  const [message, setMessage] = useState(null);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const submitHandler = (e) => {};
-  // const postDetails = (pics) => {};
+  const [picMessage, setPicMessage] = useState(null);
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+
+    if (password !== confirmpassword) {
+      setMessage("Passwod Do Not Match");
+    } else {
+      setMessage(null);
+      try {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        setLoading(true);
+
+        const { data } = await axios.post(
+          "https://n07siw-8000.preview.csb.app/api/users/login",
+          { name, email, password, pic },
+          config
+        );
+        setLoading(false);
+        localStorage.setItem("userInfo", JSON.stringify(data));
+      } catch (error) {
+        setError(error.response.data.message);
+      }
+    }
+  };
+  const postDetails = (pics) => {
+    if (!pics) {
+      return setPicMessage("please Select a Image");
+    }
+    setPic(null);
+    if (pic.type === "image/jepg" || pic.type === " image/png") {
+      const data = new FormData();
+      data.append("file", pics);
+      data.append("upload_preset", "notezipper");
+      data.append("cloud_name", "dijamrzud");
+      fetch("https://api.cloudinary.com/v1_1/dijamrzud/imagge/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setPic(data.url.toString());
+        })
+        .catch((err) => console.log(err));
+    } else {
+      return setPicMessage("please Select a Image");
+    }
+  };
 
   return (
     <MainScreen title={"Register"}>
       <div className="loginContainer">
-        {/* {error && <ErrorMessage variant="danger">{error}</ErrorMessage>} */}
-        {/* {message && <ErrorMessage variant="danger">{message}</ErrorMessage>} */}
-        {/* {loading && <Loading />} */}
+        {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+        {message && <ErrorMessage variant="danger">{message}</ErrorMessage>}
+        {loading && <Loading />}
         <Form onSubmit={submitHandler}>
           <Form.Group controlId="name">
             <Form.Label>Name</Form.Label>
@@ -61,10 +118,10 @@ const RegisterScreen = () => {
             />
           </Form.Group>
 
-          {/* {picMessage && (
+          {picMessage && (
             <ErrorMessage variant="danger">{picMessage}</ErrorMessage>
-          )} */}
-          <Form.Group controlId="pic">
+          )}
+          {/* <Form.Group controlId="pic">
             <Form.Label>Profile Picture</Form.Label>
             <Form.File
               // onChange={(e) => postDetails(e.target.files[0])}
@@ -73,9 +130,16 @@ const RegisterScreen = () => {
               label="Upload Profile Picture"
               custom
             />
+          </Form.Group> */}
+          <Form.Group controlId="formFile">
+            <Form.Label>Profile Picture</Form.Label>
+            <Form.Control
+              type="file"
+              onChange={(e) => postDetails(e.target.files[0])}
+            />
           </Form.Group>
 
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" className="my-2">
             Register
           </Button>
         </Form>
