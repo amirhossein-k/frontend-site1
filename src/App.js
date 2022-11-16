@@ -13,7 +13,7 @@ const App = () => {
   useEffect(() => {
     const fett = async () => {
       const { data } = await axios.get(
-        "https://exqe2r-8000.preview.csb.app/api/test"
+        "https://n07siw-8000.preview.csb.app/api/test"
       );
       console.log(data);
     };
