@@ -1,22 +1,31 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { json, Link } from "react-router-dom";
 import MainSreen from "../../components/MainScreen";
 import "./LoginScreen.css";
+import Loading from "../../components/Loading";
+import ErrorMessage from "../../components/ErrorMessage";
 
-const LoginScreen = () => {
+const LoginScreen = ({history}) => {
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  
+  // useEffect(() => {
+  //   if (userInfo) {
+  //     history.push("/mynotes");
+  //   }
+  // }, [history, userInfo]);
 
   const submithandler = async (e) => {
     e.preventDefault();
     try {
       const config = {
         headers: {
-          "Content-type": "application/json",
+          "Content-Type": "application/json",
         },
       };
 
@@ -32,12 +41,15 @@ const LoginScreen = () => {
       setLoading(false);
     } catch (error) {
       setError(error.response.data.message);
+      setLoading(false);
     }
   };
 
   return (
     <MainSreen title={"login"}>
       <div className="loginContainer">
+        {loading && <Loading />}
+        {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
         <Form onSubmit={submithandler}>
           <Form.Group controlId="fromBasicEmail">
             <Form.Label>Email Address</Form.Label>
