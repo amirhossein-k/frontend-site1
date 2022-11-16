@@ -6,6 +6,9 @@ import "./App.css";
 import axios from "axios";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MyNotes from "./screens/MyNotes/MyNotes";
+import RegisterScreen from " ./screens/RegisterScreen/RegisterScreen";
+import LoginScreen from " ./screens/LoginScreen/LoginScreen";
+
 const App = () => {
   useEffect(() => {
     const fett = async () => {
@@ -22,6 +25,8 @@ const App = () => {
       <main>
         <Routes>
           <Route path="/" exact element={<LandingPage />} />
+          <Route path="/login" exact element={<LoginScreen />} />
+          <Route path="/register" exact element={<RegisterScreen />} />
           <Route path="/mynotes" element={<MyNotes />} />
         </Routes>
       </main>
