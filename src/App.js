@@ -17,7 +17,7 @@ const App = () => {
       );
       console.log(data);
     };
-    fett();
+    // fett();
   }, []);
   return (
     <BrowserRouter>
