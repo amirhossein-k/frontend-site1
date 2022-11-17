@@ -15,7 +15,7 @@ const MyNotes = () => {
       console.log(data);
       setNotes(data);
     };
-    fett();
+    // fett();
     console.log(notes, "notes");
   }, []);
 

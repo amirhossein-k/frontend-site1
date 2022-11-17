@@ -1,47 +1,33 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { json, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import MainSreen from "../../components/MainScreen";
 import "./LoginScreen.css";
 import Loading from "../../components/Loading";
 import ErrorMessage from "../../components/ErrorMessage";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../actions/userActions";
+import axios from "axios";
 
-const LoginScreen = ({ history }) => {
+const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(false);
+  // const [loading, setLoading] = useState(false);
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   if (userInfo) {
-  //     history.push("/mynotes");
-  //   }
-  // }, [history, userInfo]);
+  const userLogin = useSelector((state) => state.userLogin);
+  const { error, loading, userInfo } = userLogin;
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/mynotes");
+    }
+  }, [navigate, userInfo]);
 
   const submithandler = async (e) => {
     e.preventDefault();
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-
-      setLoading(true);
-
-      const { data } = await axios.post(
-        "https://n07siw-8000.preview.csb.app/api/users/login",
-        { email, password },
-        config
-      );
-      console.log(data);
-      localStorage.setItem("userInfo", JSON.stringify(data));
-      setLoading(false);
-    } catch (error) {
-      setError(error.response.data.message);
-      setLoading(false);
-    }
+    dispatch(login(email, password));
   };
 
   return (

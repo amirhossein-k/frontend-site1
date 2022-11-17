@@ -3,10 +3,13 @@ import React, { useEffect, useRef, useState } from "react";
 import MainScreen from "../../components/MainScreen";
 import ErrorMessage from "../../components/ErrorMessage";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loading from "../../components/Loading";
+import { useDispatch, useSelector } from "react-redux";
 // import cloudinary from "cloudinary";
+import { register } from "../../actions/userActions";
+
 const RegisterScreen = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -14,42 +17,32 @@ const RegisterScreen = () => {
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(null);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [disable, setDisable] = useState(true);
 
   const [picMessage, setPicMessage] = useState(null);
   const [messagepic, setMessagePic] = useState("select photo");
-
+  let navigate = useNavigate();
   const fileInput = useRef(null);
+  const dispatch = useDispatch();
 
-  useEffect(() => {}, [fileInput]);
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/mynotes");
+    }
+  }, [fileInput, userInfo]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
 
     if (password !== confirmpassword) {
-      setMessage("Passwod Do Not Match");
+      setMessage("Password do not Match");
     } else {
-      setMessage(null);
-      try {
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        };
-        setLoading(true);
-
-        const { data } = await axios.post(
-          "https://n07siw-8000.preview.csb.app/api/users",
-          { name, email, password, pic },
-          config
-        );
-        setLoading(false);
-        localStorage.setItem("userInfo", JSON.stringify(data));
-      } catch (error) {
-        setError(error.response.data.message);
-      }
+      dispatch(register(name, email, password, pic));
     }
   };
   const postDetails = (pics) => {
