@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import MainScreen from "../../components/MainScreen";
 import ErrorMessage from "../../components/ErrorMessage";
@@ -10,16 +10,19 @@ import Loading from "../../components/Loading";
 const RegisterScreen = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [pic, setPic] = useState(
-    "https://www.uplooder.net/img/image/26/ed865d9371d96b09081c66f518ae0a8c/pngwing.com-(26).png"
-  );
+  const [pic, setPic] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [disable, setDisable] = useState(true);
 
   const [picMessage, setPicMessage] = useState(null);
+
+  const fileInput = useRef(null);
+
+  useEffect(() => {}, [fileInput]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -49,13 +52,6 @@ const RegisterScreen = () => {
     }
   };
   const postDetails = (pics) => {
-    console.log(pics);
-    if (
-      pics ===
-      "https://www.uplooder.net/img/image/26/ed865d9371d96b09081c66f518ae0a8c/pngwing.com-(26).png"
-    ) {
-      return setPicMessage("please Select a Image");
-    }
     setPicMessage(null);
     if (
       pics.type === "image/jpeg" ||
@@ -66,7 +62,14 @@ const RegisterScreen = () => {
       data.append("file", pics);
       data.append("upload_preset", "notezipper");
       data.append("cloud_name", "dijamrzud");
+      ///////
+      console.log(fileInput.current.files);
 
+      setTimeout(() => {
+        setDisable(false);
+        console.log(fileInput.current.files, "toye tttt");
+      }, 2000);
+      /////
       fetch("https://api.cloudinary.com/v1_1/dijamrzud/image/upload", {
         method: "post",
         body: data,
@@ -74,7 +77,6 @@ const RegisterScreen = () => {
         .then((res) => res.json())
         .then((data) => {
           setPic(data.url.toString());
-          console.log(pic);
         })
         .catch((err) => console.log(err));
     } else {
@@ -126,7 +128,6 @@ const RegisterScreen = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </Form.Group>
-
           {picMessage && (
             <ErrorMessage variant="danger">{picMessage}</ErrorMessage>
           )}
@@ -145,10 +146,20 @@ const RegisterScreen = () => {
             <Form.Control
               type="file"
               onChange={(e) => postDetails(e.target.files[0])}
+              ref={fileInput}
             />
           </Form.Group>
 
-          <Button variant="primary" type="submit" className="my-2">
+          {disable && (
+            <div style={{ color: "red", fontSize: 20 }}>Select One Photo</div>
+          )}
+
+          <Button
+            variant="primary"
+            type="submit"
+            className="my-2"
+            disabled={disable}
+          >
             Register
           </Button>
         </Form>
