@@ -54,22 +54,26 @@ const RegisterScreen = () => {
     }
     setPic(null);
     if (pic.type === "image/jepg" || pic.type === " image/png") {
-      const data = new FormData();
-      data.append("file", pics);
-      data.append("upload_preset", "notezipper");
-      data.append("cloud_name", "dijamrzud");
-      fetch("https://api.cloudinary.com/v1_1/dijamrzud/imagge/upload", {
-        method: "post",
-        body: data,
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          setPic(data.url.toString());
+      for (let i = 0; i < pics.length; i++) {
+        let pic = pics[i];
+
+        const data = new FormData();
+        data.append("file", pic);
+        data.append("upload_preset", "notezipper");
+
+        fetch("https://api.cloudinary.com/v1_1/dijamrzud/imagge/upload", {
+          method: "POST",
+          body: data,
         })
-        .catch((err) => console.log(err));
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            setPic(data.url.toString());
+          })
+          .catch((err) => console.log(err));
+      }
     } else {
-      return setPicMessage("please Select a Image");
+      return setPicMessage("please Select a Imagess");
     }
   };
 
@@ -134,8 +138,9 @@ const RegisterScreen = () => {
           <Form.Group controlId="formFile">
             <Form.Label>Profile Picture</Form.Label>
             <Form.Control
+              id="custom-file"
               type="file"
-              onChange={(e) => postDetails(e.target.files[0])}
+              onChange={(e) => postDetails(e.target.files)}
             />
           </Form.Group>
 
