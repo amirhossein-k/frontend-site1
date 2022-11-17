@@ -37,7 +37,7 @@ const RegisterScreen = () => {
         setLoading(true);
 
         const { data } = await axios.post(
-          "https://n07siw-8000.preview.csb.app/api/users/login",
+          "https://n07siw-8000.preview.csb.app/api/users",
           { name, email, password, pic },
           config
         );
@@ -48,25 +48,33 @@ const RegisterScreen = () => {
       }
     }
   };
-  const postDetails = (pics) => {
-    if (!pics) {
+  const postDetails = async (pics) => {
+    console.log(pics);
+    if (
+      pics ===
+      "https://www.uplooder.net/img/image/26/ed865d9371d96b09081c66f518ae0a8c/pngwing.com-(26).png"
+    ) {
       return setPicMessage("please Select a Image");
     }
     setPicMessage(null);
-    if (pics.type === "image/jpeg" || pics.type === " image/png") {
+    if (
+      pics.type === "image/jpeg" ||
+      pics.type === "image/png" ||
+      pics.type === "image/jpg"
+    ) {
       const data = new FormData();
       data.append("file", pics);
       data.append("upload_preset", "notezipper");
       data.append("cloud_name", "dijamrzud");
 
-      fetch("https://api.cloudinary.com/v1_1/dijamrzud/image/upload", {
+      await fetch("https://api.cloudinary.com/v1_1/dijamrzud/image/upload", {
         method: "post",
         body: data,
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           setPic(data.url.toString());
+          console.log(pic);
         })
         .catch((err) => console.log(err));
     } else {
@@ -132,10 +140,9 @@ const RegisterScreen = () => {
               custom
             />
           </Form.Group> */}
-          <Form.Group controlId="formFile">
+          <Form.Group controlId="pic">
             <Form.Label>Profile Picture</Form.Label>
             <Form.Control
-              id="custom-file"
               type="file"
               onChange={(e) => postDetails(e.target.files[0])}
             />
