@@ -7,13 +7,12 @@ import "./LoginScreen.css";
 import Loading from "../../components/Loading";
 import ErrorMessage from "../../components/ErrorMessage";
 
-const LoginScreen = ({history}) => {
-  
+const LoginScreen = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  
+
   // useEffect(() => {
   //   if (userInfo) {
   //     history.push("/mynotes");

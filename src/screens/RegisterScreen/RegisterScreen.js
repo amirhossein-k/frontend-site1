@@ -52,26 +52,23 @@ const RegisterScreen = () => {
     if (!pics) {
       return setPicMessage("please Select a Image");
     }
-    setPic(null);
-    if (pic.type === "image/jepg" || pic.type === " image/png") {
-      for (let i = 0; i < pics.length; i++) {
-        let pic = pics[i];
+    setPicMessage(null);
+    if (pics.type === "image/jpeg" || pics.type === " image/png") {
+      const data = new FormData();
+      data.append("file", pics);
+      data.append("upload_preset", "notezipper");
+      data.append("cloud_name", "dijamrzud");
 
-        const data = new FormData();
-        data.append("file", pic);
-        data.append("upload_preset", "notezipper");
-
-        fetch("https://api.cloudinary.com/v1_1/dijamrzud/imagge/upload", {
-          method: "POST",
-          body: data,
+      fetch("https://api.cloudinary.com/v1_1/dijamrzud/image/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setPic(data.url.toString());
         })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-            setPic(data.url.toString());
-          })
-          .catch((err) => console.log(err));
-      }
+        .catch((err) => console.log(err));
     } else {
       return setPicMessage("please Select a Imagess");
     }
@@ -140,7 +137,7 @@ const RegisterScreen = () => {
             <Form.Control
               id="custom-file"
               type="file"
-              onChange={(e) => postDetails(e.target.files)}
+              onChange={(e) => postDetails(e.target.files[0])}
             />
           </Form.Group>
 
