@@ -48,7 +48,7 @@ const RegisterScreen = () => {
       }
     }
   };
-  const postDetails = async (pics) => {
+  const postDetails = (pics) => {
     console.log(pics);
     if (
       pics ===
@@ -67,7 +67,7 @@ const RegisterScreen = () => {
       data.append("upload_preset", "notezipper");
       data.append("cloud_name", "dijamrzud");
 
-      await fetch("https://api.cloudinary.com/v1_1/dijamrzud/image/upload", {
+      fetch("https://api.cloudinary.com/v1_1/dijamrzud/image/upload", {
         method: "post",
         body: data,
       })
