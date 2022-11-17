@@ -19,6 +19,7 @@ const RegisterScreen = () => {
   const [disable, setDisable] = useState(true);
 
   const [picMessage, setPicMessage] = useState(null);
+  const [messagepic, setMessagePic] = useState("select photo");
 
   const fileInput = useRef(null);
 
@@ -64,11 +65,12 @@ const RegisterScreen = () => {
       data.append("cloud_name", "dijamrzud");
       ///////
       console.log(fileInput.current.files);
+      setMessagePic("please wite for upload photo");
 
       setTimeout(() => {
         setDisable(false);
         console.log(fileInput.current.files, "toye tttt");
-      }, 2000);
+      }, 5000);
       /////
       fetch("https://api.cloudinary.com/v1_1/dijamrzud/image/upload", {
         method: "post",
@@ -151,7 +153,7 @@ const RegisterScreen = () => {
           </Form.Group>
 
           {disable && (
-            <div style={{ color: "red", fontSize: 20 }}>Select One Photo</div>
+            <div style={{ color: "red", fontSize: 20 }}>{messagepic}</div>
           )}
 
           <Button
