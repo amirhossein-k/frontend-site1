@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Accordion, Badge, Button, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +7,7 @@ import { listNotes } from "../../actions/notesActions";
 import Loading from "../../components/Loading";
 import "./MyNotes.css";
 import ErrorMessage from "../../components/ErrorMessage";
+import axios from "axios";
 
 const MyNotes = () => {
   const dispatch = useDispatch();
@@ -22,6 +22,9 @@ const MyNotes = () => {
   const noteCreate = useSelector((state) => state.noteCreate);
   const { success: successCreate } = noteCreate;
 
+  const noteUpdate = useSelector((state) => state.noteUpdate);
+  const { success: successUpdate } = noteUpdate;
+
   const deletehandle = (id) => {
     if (window.confirm("Are you Sure?")) {
     }
@@ -32,7 +35,7 @@ const MyNotes = () => {
     if (!userInfo) {
       navigate("/");
     }
-  }, [dispatch, successCreate, navigate, userInfo]);
+  }, [dispatch, successCreate, navigate, userInfo, successUpdate]);
   return (
     <MainScreen title={`welcome back  ${userInfo.name}`}>
       <Link to="/createnote">
