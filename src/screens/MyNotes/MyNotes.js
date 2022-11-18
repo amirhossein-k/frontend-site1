@@ -33,7 +33,7 @@ const MyNotes = () => {
 
   return (
     <MainScreen title={`welcome back  ${userInfo.name}`}>
-      <Link to="createnote">
+      <Link to="/createnote">
         <Button style={{ marginLeft: 10, marginBottom: 6 }} size="lg">
           Create New Note
         </Button>
