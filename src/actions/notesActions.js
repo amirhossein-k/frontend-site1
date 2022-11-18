@@ -55,7 +55,7 @@ export const createNoteAction =
       };
 
       const { data } = axios.post(
-        "https://n07siw-8000.preview.csb.app/api/notes",
+        "https://n07siw-8000.preview.csb.app/api/notes/create",
         { title, content, category },
         config
       );

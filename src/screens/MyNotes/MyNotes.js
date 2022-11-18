@@ -19,18 +19,20 @@ const MyNotes = () => {
   const { loading, error, notes } = noteList;
   const { userInfo } = userLogin;
 
-  useEffect(() => {
-    dispatch(listNotes());
-    if (!userInfo) {
-      navigate("/");
-    }
-  }, [dispatch]);
+  const noteCreate = useSelector((state) => state.noteCreate);
+  const { success: successCreate } = noteCreate;
 
   const deletehandle = (id) => {
     if (window.confirm("Are you Sure?")) {
     }
   };
 
+  useEffect(() => {
+    dispatch(listNotes());
+    if (!userInfo) {
+      navigate("/");
+    }
+  }, [dispatch, successCreate, navigate, userInfo]);
   return (
     <MainScreen title={`welcome back  ${userInfo.name}`}>
       <Link to="/createnote">
@@ -40,52 +42,53 @@ const MyNotes = () => {
       </Link>
       {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
       {loading && <Loading />}
-      {notes?.map((note) => (
-        <Accordion defaultActiveKey="1" flush key={note._id}>
-          <Card style={{ margin: 10, textDecoration: "none" }}>
-            <Accordion.Item eventKey="0">
-              <Accordion.Header>
-                <span
-                  style={{
-                    color: "black",
-                    textDecoration: "none",
-                    flex: 1,
-                    cursor: "pointer",
-                    alignSelf: "center",
-                    fontSize: 18,
-                  }}
-                >
-                  {note.title}
-                </span>
-                <div>
-                  <Button href={"/"}>Edit</Button>
-                  <Button variant="danger" className="mx-2">
-                    Delete
-                  </Button>
-                </div>
-              </Accordion.Header>
-              <Accordion.Body>
-                <Card.Body>
-                  <h4>
-                    <Badge className="btn-red">
-                      Catagory - {note.category}
-                    </Badge>
-                  </h4>
-                  <blockquote className="blockquote mb-0">
-                    <p>{note.content}</p>
-                    <footer className="blockquote-footer">
-                      create on -{" "}
-                      <cite title="Sorce Title">
-                        {note.createdAt.substring(0, 10)}
-                      </cite>
-                    </footer>
-                  </blockquote>
-                </Card.Body>
-              </Accordion.Body>
-            </Accordion.Item>
-          </Card>
-        </Accordion>
-      ))}
+      {notes &&
+        notes.reverse().map((note) => (
+          <Accordion defaultActiveKey="1" flush key={note._id}>
+            <Card style={{ margin: 10, textDecoration: "none" }}>
+              <Accordion.Item eventKey="0">
+                <Accordion.Header>
+                  <span
+                    style={{
+                      color: "black",
+                      textDecoration: "none",
+                      flex: 1,
+                      cursor: "pointer",
+                      alignSelf: "center",
+                      fontSize: 18,
+                    }}
+                  >
+                    {note.title}
+                  </span>
+                  <div>
+                    <Button href={"/"}>Edit</Button>
+                    <Button variant="danger" className="mx-2">
+                      Delete
+                    </Button>
+                  </div>
+                </Accordion.Header>
+                <Accordion.Body>
+                  <Card.Body>
+                    <h4>
+                      <Badge className="btn-red">
+                        Catagory - {note.category}
+                      </Badge>
+                    </h4>
+                    <blockquote className="blockquote mb-0">
+                      <p>{note.content}</p>
+                      <footer className="blockquote-footer">
+                        create on -{" "}
+                        <cite title="Sorce Title">
+                          {note.createdAt.substring(0, 10)}
+                        </cite>
+                      </footer>
+                    </blockquote>
+                  </Card.Body>
+                </Accordion.Body>
+              </Accordion.Item>
+            </Card>
+          </Accordion>
+        ))}
     </MainScreen>
   );
 };
