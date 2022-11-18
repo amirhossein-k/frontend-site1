@@ -10,18 +10,14 @@ import { Button, Card, Form } from "react-bootstrap";
 import { updateNoteAction } from "../../actions/notesActions";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { ObjectId } from "mongodb";
 
 const SingleNote = () => {
   let navigate = useNavigate();
   const { id } = useParams();
+  console.log(id, "iddddd");
+
   ////////////////
-  function strRemoveAll(s, r) {
-    return s.replaceAll(r, "");
-  }
-  const number_id = strRemoveAll(id, "'");
-  console.log(number_id);
-  const objectId = new ObjectId("your-object-id-as-string");
+
   //////////////////
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -36,21 +32,21 @@ const SingleNote = () => {
   ///////////////////////
   useEffect(() => {
     const fetching = async () => {
-      const url = `https://n07siw-8000.preview.csb.app/api/notes/${number_id}}`;
+      const url = `https://n07siw-8000.preview.csb.app/api/notes/${id}`;
       console.log(url);
       const { data } = await axios.get(url);
 
       setTitle(data.title);
-      setContent(data.contnet);
+      setContent(data.content);
       setCategory(data.category);
       setDate(data.updatedAt);
     };
     fetching();
-  }, [date, number_id]);
+  }, [date, id]);
   ///////////
   const updatehandler = (e) => {
     e.preventDefault();
-    dispatch(updateNoteAction(number_id, title, content, category));
+    dispatch(updateNoteAction(id, title, content, category));
     if (!title || !content || !category) return;
 
     resetHandler();
