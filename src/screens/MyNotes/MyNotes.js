@@ -1,23 +1,22 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Accordion, Badge, Button, Card } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import MainScreen from "../../components/MainScreen";
+import { listNotes } from "../../actions/notesActions";
 import "./MyNotes.css";
 
 const MyNotes = () => {
-  const [notes, setNotes] = useState([]);
+  const dispatch = useDispatch();
+
+  const noteList = useSelector((state) => state.noteList);
+
+  const { loading, error, notes } = noteList;
+
   useEffect(() => {
-    const fett = async () => {
-      const { data } = await axios.get(
-        "https://n07siw-8000.preview.csb.app/api/notes"
-      );
-      console.log(data);
-      setNotes(data);
-    };
-    // fett();
-    console.log(notes, "notes");
-  }, []);
+    dispatch(listNotes());
+  }, [dispatch]);
 
   const deletehandle = (id) => {
     if (window.confirm("Are you Sure?")) {
@@ -31,7 +30,7 @@ const MyNotes = () => {
           Create New Note
         </Button>
       </Link>
-      {notes.map((note) => (
+      {notes?.map((note) => (
         <Accordion defaultActiveKey="1" flush key={note._id}>
           <Card style={{ margin: 10, textDecoration: "none" }}>
             <Accordion.Item eventKey="0">
