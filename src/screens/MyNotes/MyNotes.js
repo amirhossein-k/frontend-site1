@@ -5,7 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import MainScreen from "../../components/MainScreen";
 import { listNotes } from "../../actions/notesActions";
+import Loading from "../../components/Loading";
 import "./MyNotes.css";
+import ErrorMessage from "../../components/ErrorMessage";
 
 const MyNotes = () => {
   const dispatch = useDispatch();
@@ -30,6 +32,8 @@ const MyNotes = () => {
           Create New Note
         </Button>
       </Link>
+      {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+      {loading && <Loading />}
       {notes?.map((note) => (
         <Accordion defaultActiveKey="1" flush key={note._id}>
           <Card style={{ margin: 10, textDecoration: "none" }}>
