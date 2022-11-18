@@ -61,7 +61,7 @@ const MyNotes = () => {
                     {note.title}
                   </span>
                   <div>
-                    <Button href={"/"}>Edit</Button>
+                    <Button href={`/note/${note._id}`}>Edit</Button>
                     <Button variant="danger" className="mx-2">
                       Delete
                     </Button>
