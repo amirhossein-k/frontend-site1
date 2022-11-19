@@ -59,6 +59,7 @@ export const register = (name, email, password, pic) => async (dispatch) => {
       config
     );
     dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
+    dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
     localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
     dispatch({
@@ -85,7 +86,7 @@ export const updateProfile = (user) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.post(
+    const { data } = await axios.put(
       "https://n07siw-8000.preview.csb.app/api/users/profile",
       user,
       config
