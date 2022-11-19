@@ -9,6 +9,7 @@ import RegisterScreen from "./screens/RegisterScreen/RegisterScreen";
 import LoginScreen from "./screens/LoginScreen/LoginScreen";
 import CreateNote from "./screens/CreateNote/CreateNote";
 import SingleNote from "./screens/SingleNote/SingleNote";
+import ProfileScreen from "./screens/ProfileScreen/ProfileScreen";
 
 import "./App.css";
 
@@ -22,6 +23,7 @@ const App = () => {
         <Routes>
           <Route path="/" exact element={<LandingPage />} />
           <Route path="/login" exact element={<LoginScreen />} />
+          <Route path="/profile" exact element={<ProfileScreen />} />
           <Route path="/register" exact element={<RegisterScreen />} />
           <Route path="/createnote" exact element={<CreateNote />} />
           <Route path="/note/:id" exact element={<SingleNote />} />
