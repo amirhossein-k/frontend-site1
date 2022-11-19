@@ -43,7 +43,7 @@ const SingleNote = () => {
   ///////////////////////
   useEffect(() => {
     const fetching = async () => {
-      const url = `https://n07siw-8000.preview.csb.app/api/notes/${id}`;
+      const url = `https://backend-site1.vercel.app/api/notes/${id}`;
       console.log(url);
       const { data } = await axios.get(url);
 
