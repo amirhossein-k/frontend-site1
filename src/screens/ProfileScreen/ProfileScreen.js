@@ -154,13 +154,13 @@ const ProfileScreen = () => {
                   ref={fileInput}
                 />
               </Form.Group>
-              {disable && (
+              {/* {!disable && (
                 <div style={{ color: "red", fontSize: 20 }}>{messagepic}</div>
-              )}
+              )} */}
               <Button
                 type="submit"
                 varient="primary"
-                disabled={disable}
+                disabled={pic ? false : true}
                 className="my-2"
               >
                 Update

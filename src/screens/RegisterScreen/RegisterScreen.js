@@ -46,6 +46,7 @@ const RegisterScreen = () => {
     }
   };
   const postDetails = (pics) => {
+    setMessagePic("please wait for upload photo");
     setPicMessage(null);
     if (
       pics.type === "image/jpeg" ||
@@ -58,12 +59,11 @@ const RegisterScreen = () => {
       data.append("cloud_name", "dijamrzud");
       ///////
       console.log(fileInput.current.files);
-      setMessagePic("please wite for upload photo");
 
-      setTimeout(() => {
-        setDisable(false);
-        console.log(fileInput.current.files, "toye tttt");
-      }, 5000);
+      // setTimeout(() => {
+      //   setDisable(false);
+      //   console.log(fileInput.current.files, "toye tttt");
+      // }, 5000);
       /////
       fetch("https://api.cloudinary.com/v1_1/dijamrzud/image/upload", {
         method: "post",
@@ -72,6 +72,7 @@ const RegisterScreen = () => {
         .then((res) => res.json())
         .then((data) => {
           setPic(data.url.toString());
+          setMessagePic("");
         })
         .catch((err) => console.log(err));
     } else {
@@ -146,14 +147,26 @@ const RegisterScreen = () => {
           </Form.Group>
 
           {disable && (
-            <div style={{ color: "red", fontSize: 20 }}>{messagepic}</div>
+            <div
+              style={
+                !pic
+                  ? {
+                      color: "red",
+                      fontSize: 15,
+                      textTransform: "capitalize",
+                    }
+                  : {}
+              }
+            >
+              {messagepic}
+            </div>
           )}
 
           <Button
             variant="primary"
             type="submit"
             className="my-2"
-            disabled={disable}
+            disabled={pic ? false : true}
           >
             Register
           </Button>
