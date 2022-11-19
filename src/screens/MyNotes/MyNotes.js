@@ -10,7 +10,7 @@ import ErrorMessage from "../../components/ErrorMessage";
 import { deleteNoteAction } from "../../actions/notesActions";
 import axios from "axios";
 
-const MyNotes = () => {
+const MyNotes = ({ search }) => {
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
@@ -66,56 +66,61 @@ const MyNotes = () => {
       {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
       {loading && <Loading />}
       {notes &&
-        notes.reverse().map((note) => (
-          <Accordion defaultActiveKey="1" flush key={note._id}>
-            <Card style={{ margin: 10, textDecoration: "none" }}>
-              <Accordion.Item eventKey="0">
-                <Accordion.Header>
-                  <span
-                    style={{
-                      color: "black",
-                      textDecoration: "none",
-                      flex: 1,
-                      cursor: "pointer",
-                      alignSelf: "center",
-                      fontSize: 18,
-                    }}
-                  >
-                    {note.title}
-                  </span>
-                  <div>
-                    <Button href={`/note/${note._id}`}>Edit</Button>
-                    <Button
-                      variant="danger"
-                      className="mx-2"
-                      onClick={() => deletehandle(note._id)}
+        notes
+          .reverse()
+          .filter((filteredNote) =>
+            filteredNote.title.toLowerCase().includes(search.toLowerCase())
+          )
+          .map((note) => (
+            <Accordion defaultActiveKey="1" flush key={note._id}>
+              <Card style={{ margin: 10, textDecoration: "none" }}>
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header>
+                    <span
+                      style={{
+                        color: "black",
+                        textDecoration: "none",
+                        flex: 1,
+                        cursor: "pointer",
+                        alignSelf: "center",
+                        fontSize: 18,
+                      }}
                     >
-                      Delete
-                    </Button>
-                  </div>
-                </Accordion.Header>
-                <Accordion.Body>
-                  <Card.Body>
-                    <h4>
-                      <Badge className="btn-red">
-                        Catagory - {note.category}
-                      </Badge>
-                    </h4>
-                    <blockquote className="blockquote mb-0">
-                      <p>{note.content}</p>
-                      <footer className="blockquote-footer">
-                        create on -{" "}
-                        <cite title="Sorce Title">
-                          {note.createdAt.substring(0, 10)}
-                        </cite>
-                      </footer>
-                    </blockquote>
-                  </Card.Body>
-                </Accordion.Body>
-              </Accordion.Item>
-            </Card>
-          </Accordion>
-        ))}
+                      {note.title}
+                    </span>
+                    <div>
+                      <Button href={`/note/${note._id}`}>Edit</Button>
+                      <Button
+                        variant="danger"
+                        className="mx-2"
+                        onClick={() => deletehandle(note._id)}
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    <Card.Body>
+                      <h4>
+                        <Badge className="btn-red">
+                          Catagory - {note.category}
+                        </Badge>
+                      </h4>
+                      <blockquote className="blockquote mb-0">
+                        <p>{note.content}</p>
+                        <footer className="blockquote-footer">
+                          create on -{" "}
+                          <cite title="Sorce Title">
+                            {note.createdAt.substring(0, 10)}
+                          </cite>
+                        </footer>
+                      </blockquote>
+                    </Card.Body>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Card>
+            </Accordion>
+          ))}
     </MainScreen>
   );
 };

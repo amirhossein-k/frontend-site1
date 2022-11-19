@@ -10,7 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../actions/userActions";
 import "./Header.css";
 
-const Header = () => {
+const Header = ({ setSearch }) => {
   let navigate = useNavigate();
 
   // const [isuser, setIsuser] = useState(false);
@@ -40,6 +40,7 @@ const Header = () => {
                   placeholder="Search"
                   className="me-2"
                   aria-label="Search"
+                  onChange={(e) => setSearch(e.target.value)}
                 />
               </Form>
             </Nav>
@@ -49,8 +50,8 @@ const Header = () => {
                   My Notes
                 </Link>
               </Nav.Link>
-              <Nav.Link href="#action2">Link</Nav.Link>
-              <NavDropdown title="Dashboard" id="navbarScrollingDropdown">
+              {/* <Nav.Link href="#action2">Link</Nav.Link> */}
+              <NavDropdown title={userInfo.name} id="navbarScrollingDropdown">
                 <NavDropdown.Item href="#action3">My Profile</NavDropdown.Item>
 
                 <NavDropdown.Divider />

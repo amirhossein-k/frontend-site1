@@ -13,19 +13,11 @@ import SingleNote from "./screens/SingleNote/SingleNote";
 import "./App.css";
 
 const App = () => {
-  useEffect(() => {
-    const fett = async () => {
-      const { data } = await axios.get(
-        "https://n07siw-8000.preview.csb.app/api/test"
-      );
-      console.log(data);
-    };
-    // fett();
-  }, []);
- 
+  const [search, setSearch] = useState("");
+
   return (
     <BrowserRouter>
-      <Header />
+      <Header setSearch={setSearch} />
       <main>
         <Routes>
           <Route path="/" exact element={<LandingPage />} />
@@ -33,7 +25,7 @@ const App = () => {
           <Route path="/register" exact element={<RegisterScreen />} />
           <Route path="/createnote" exact element={<CreateNote />} />
           <Route path="/note/:id" exact element={<SingleNote />} />
-          <Route path="/mynotes" element={<MyNotes />} />
+          <Route path="/mynotes" element={<MyNotes search={search} />} />
         </Routes>
       </main>
       <Footer />
