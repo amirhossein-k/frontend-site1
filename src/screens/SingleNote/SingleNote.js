@@ -10,7 +10,9 @@ import { Button, Card, Form } from "react-bootstrap";
 import { updateNoteAction } from "../../actions/notesActions";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { deleteNoteAction } from "../../actions/notesActions";
 
+///////////////////////////////////////////////////////////////////////////////////////
 const SingleNote = () => {
   let navigate = useNavigate();
   const { id } = useParams();
@@ -29,6 +31,15 @@ const SingleNote = () => {
   const { loading, error } = noteUpdate;
   ////
 
+  const noteDelete = useSelector((state) => state.noteDelete);
+  const { loading: loadingDelete, error: errorDelete } = noteDelete;
+
+  const deleteHandler = (id) => {
+    if (window.confirm("Are you Sure?")) {
+      dispatch(deleteNoteAction(id));
+    }
+    navigate("/mynotes");
+  };
   ///////////////////////
   useEffect(() => {
     const fetching = async () => {
@@ -63,6 +74,10 @@ const SingleNote = () => {
         <Card.Header>Edit tour note</Card.Header>
         <Card.Body>
           <Form onSubmit={updatehandler}>
+            {errorDelete && (
+        <ErrorMessage variant="danger">{errorDelete}</ErrorMessage>
+      )}
+      {loadingDelete && <Loading />}
             {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
             <Form.Group controlId="title">
               <Form.Label>Title</Form.Label>
@@ -104,13 +119,13 @@ const SingleNote = () => {
             <Button variant="primary" type="submit">
               Update Note
             </Button>
-            {/* <Button
+            <Button
               className="mx-2"
               variant="danger"
-              onClick={() => deleteHandler(match.params.id)}
+              onClick={() => deleteHandler(id)}
             >
               Delete Note
-            </Button> */}
+            </Button>
           </Form>
         </Card.Body>
         <Card.Footer className="text-muted">

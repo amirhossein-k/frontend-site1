@@ -7,6 +7,7 @@ import { listNotes } from "../../actions/notesActions";
 import Loading from "../../components/Loading";
 import "./MyNotes.css";
 import ErrorMessage from "../../components/ErrorMessage";
+import { deleteNoteAction } from "../../actions/notesActions";
 import axios from "axios";
 
 const MyNotes = () => {
@@ -25,8 +26,16 @@ const MyNotes = () => {
   const noteUpdate = useSelector((state) => state.noteUpdate);
   const { success: successUpdate } = noteUpdate;
 
+  const noteDelete = useSelector((state) => state.noteDelete);
+  const {
+    success: successDelete,
+    loading: loadingDelete,
+    error: errorDelete,
+  } = noteDelete;
+
   const deletehandle = (id) => {
     if (window.confirm("Are you Sure?")) {
+      dispatch(deleteNoteAction(id));
     }
   };
 
@@ -35,7 +44,14 @@ const MyNotes = () => {
     if (!userInfo) {
       navigate("/");
     }
-  }, [dispatch, successCreate, navigate, userInfo, successUpdate]);
+  }, [
+    dispatch,
+    successCreate,
+    navigate,
+    userInfo,
+    successUpdate,
+    successDelete,
+  ]);
   return (
     <MainScreen title={`welcome back  ${userInfo.name}`}>
       <Link to="/createnote">
@@ -43,6 +59,10 @@ const MyNotes = () => {
           Create New Note
         </Button>
       </Link>
+      {errorDelete && (
+        <ErrorMessage variant="danger">{errorDelete}</ErrorMessage>
+      )}
+      {loadingDelete && <Loading />}
       {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
       {loading && <Loading />}
       {notes &&
@@ -65,7 +85,11 @@ const MyNotes = () => {
                   </span>
                   <div>
                     <Button href={`/note/${note._id}`}>Edit</Button>
-                    <Button variant="danger" className="mx-2">
+                    <Button
+                      variant="danger"
+                      className="mx-2"
+                      onClick={() => deletehandle(note._id)}
+                    >
                       Delete
                     </Button>
                   </div>
