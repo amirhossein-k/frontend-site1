@@ -21,7 +21,7 @@ export const login = (email, password) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      "https://n07siw-8000.preview.csb.app/api/users/login",
+      "https://backend-site1.vercel.app/api/users/login",
       { email, password },
       config
     );
@@ -54,7 +54,7 @@ export const register = (name, email, password, pic) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      "https://n07siw-8000.preview.csb.app/api/users",
+      "https://backend-site1.vercel.app/api/users",
       { name, email, password, pic },
       config
     );
@@ -87,7 +87,7 @@ export const updateProfile = (user) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      "https://n07siw-8000.preview.csb.app/api/users/profile",
+      "https://backend-site1.vercel.app/api/users/profile",
       user,
       config
     );

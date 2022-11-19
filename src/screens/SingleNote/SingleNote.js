@@ -43,7 +43,7 @@ const SingleNote = () => {
   ///////////////////////
   useEffect(() => {
     const fetching = async () => {
-      const url = `https://n07siw-8000.preview.csb.app/api/notes/${id}`;
+      const url = `https://backend-site1.vercel.app/api/notes/${id}`;
       console.log(url);
       const { data } = await axios.get(url);
 
@@ -75,9 +75,9 @@ const SingleNote = () => {
         <Card.Body>
           <Form onSubmit={updatehandler}>
             {errorDelete && (
-        <ErrorMessage variant="danger">{errorDelete}</ErrorMessage>
-      )}
-      {loadingDelete && <Loading />}
+              <ErrorMessage variant="danger">{errorDelete}</ErrorMessage>
+            )}
+            {loadingDelete && <Loading />}
             {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
             <Form.Group controlId="title">
               <Form.Label>Title</Form.Label>
