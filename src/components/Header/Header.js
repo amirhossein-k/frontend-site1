@@ -44,22 +44,31 @@ const Header = ({ setSearch }) => {
                 />
               </Form>
             </Nav>
-            <Nav style={{ maxHeight: "200px" }} navbarScroll>
-              <Nav.Link href="/mynotes">
-                <Link to="/mynotes" className="link">
-                  My Notes
-                </Link>
-              </Nav.Link>
-              {/* <Nav.Link href="#action2">Link</Nav.Link> */}
-              <NavDropdown title={userInfo.name} id="navbarScrollingDropdown">
-                <NavDropdown.Item href="#action3">My Profile</NavDropdown.Item>
+            {userInfo ? (
+              <Nav style={{ maxHeight: "200px" }} navbarScroll>
+                <Nav.Link href="/mynotes">
+                  <Link to="/mynotes" className="link">
+                    My Notes
+                  </Link>
+                </Nav.Link>
+                {/* <Nav.Link href="#action2">Link</Nav.Link> */}
+                <NavDropdown
+                  title={userInfo?.name}
+                  id="navbarScrollingDropdown"
+                >
+                  <NavDropdown.Item href="#action3">
+                    My Profile
+                  </NavDropdown.Item>
 
-                <NavDropdown.Divider />
-                <NavDropdown.Item onClick={logouthandler}>
-                  Logout
-                </NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item onClick={logouthandler}>
+                    Logout
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </Nav>
+            ) : (
+              <Nav.Link href="/login">Login</Nav.Link>
+            )}
           </Navbar.Collapse>
         </Container>
       </Navbar>
