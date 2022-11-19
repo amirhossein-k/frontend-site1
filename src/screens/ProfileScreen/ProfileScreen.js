@@ -1,12 +1,12 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Button, Container, Row, Col, Form } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import ErrorMessage from "../../components/ErrorMessage";
-import Loading from "../../components/Loading";
-import { Link, useNavigate } from "react-router-dom";
-import { updateProfile } from "../../actions/userActions";
+import React, { useState, useEffect, useRef } from "react";
+import { Form, Button, Row, Col } from "react-bootstrap";
 import MainScreen from "../../components/MainScreen";
 import "./ProfileScreen.css";
+import { useDispatch, useSelector } from "react-redux";
+import { updateProfile } from "../../actions/userActions";
+import Loading from "../../components/Loading";
+import ErrorMessage from "../../components/ErrorMessage";
+import { Link, useNavigate } from "react-router-dom";
 /////////////////
 const ProfileScreen = () => {
   /////////
