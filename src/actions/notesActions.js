@@ -29,7 +29,7 @@ export const listNotes = () => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      "https://n07siw-8000.preview.csb.app/api/notes",
+      "https://backend-site1.vercel.app/api/notes",
       config
     );
 
@@ -61,7 +61,7 @@ export const updateNoteAction =
         },
       };
       const { data } = await axios.put(
-        `https://n07siw-8000.preview.csb.app/api/notes/${id}`,
+        `https://backend-site1.vercel.app/api/notes/${id}`,
         { title, category, content },
         config
       );
@@ -95,7 +95,7 @@ export const createNoteAction =
       };
 
       const { data } = axios.post(
-        "https://n07siw-8000.preview.csb.app/api/notes/create",
+        "https://backend-site1.vercel.app/api/notes/create",
         { title, content, category },
         config
       );
@@ -126,7 +126,7 @@ export const deleteNoteAction = (id) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.delete(
-      `https://n07siw-8000.preview.csb.app/api/notes/${id}`,
+      `https://backend-site1.vercel.app/api/notes/${id}`,
       config
     );
 
